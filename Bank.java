@@ -21,7 +21,7 @@ public class Bank {
             users.add(user);
         }
         setClientsToAdmin();
-
+        
         while (true) {
             authMenu();
             int choice = Integer.parseInt(in.nextLine());
