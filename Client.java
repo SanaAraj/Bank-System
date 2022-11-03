@@ -12,9 +12,10 @@ public class Client extends User {
     private ArrayList<Transaction> transactions = new ArrayList<>();
     private ArrayList<Loan> loans = new ArrayList<>();
 
-    public Client(int id, String name, int age, String address, String contactNum, String PIN, String username, String password) {
-        super(name, contactNum, age, username, password);
-        this.id = id;
+    public Client(int id, String name, int age, String address, String contactNum, String PIN, String username,
+            String password) {
+        super(name, contactNum, age, id, username, password);
+        // this.id = id;
         this.name = name;
         this.address = address;
         this.PIN = PIN;
@@ -23,7 +24,7 @@ public class Client extends User {
         accountNumber = incrementAccountNumber(accountNumber);
     }
 
-    public void closeAcc(){
+    public void closeAcc() {
         isClosed = true;
     }
 
@@ -40,8 +41,10 @@ public class Client extends User {
     }
 
     public void view_Client_Acc() {
-        System.out.printf("%-10s%-5s%-10s%-16s%-16s%-10s%-10s%-10s%-10s%n", "Name", "ID", "Address", "Contact Number", "Account Number", "Username", "Balance", "Limit", "Is Closed");
-        System.out.printf("%-10s%-5s%-10s%-16s%-16s%-10s%-10s%-10s%-10s%n", name, id, address, contactNum, accNum, username, balance, limit, isClosed);
+        System.out.printf("%-10s%-5s%-10s%-16s%-16s%-10s%-10s%-10s%-10s%n", "Name", "ID", "Address", "Contact Number",
+                "Account Number", "Username", "Balance", "Limit", "Is Closed");
+        System.out.printf("%-10s%-5s%-10s%-16s%-16s%-10s%-10s%-10s%-10s%n", name, id, address, contactNum, accNum,
+                username, balance, limit, isClosed);
     }
 
     public void print_history() {
@@ -65,6 +68,7 @@ public class Client extends User {
     public void changeLimit(double limit) {
         this.limit = limit;
     }
+
     private String incrementAccountNumber(String accountNumber) {
         String newAccountNumber = "";
         int number = Integer.parseInt(accountNumber.substring(1));
@@ -72,7 +76,6 @@ public class Client extends User {
         newAccountNumber = "A" + String.format("%09d", number);
         return newAccountNumber;
     }
-
 
     public void setId(int id) {
         this.id = id;
@@ -98,7 +101,6 @@ public class Client extends User {
         return limit;
     }
 
-
     public boolean isClosed() {
         return isClosed;
     }
@@ -123,4 +125,3 @@ public class Client extends User {
         return loans;
     }
 }
-

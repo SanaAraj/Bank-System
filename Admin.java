@@ -5,9 +5,11 @@ public class Admin extends User {
 
     private ArrayList<Client> clients = new ArrayList<Client>();
 
+
     public Admin(int id, String name, String contactNum, int age, String username, String password) {
-        super(name, contactNum, age, username, password);
-        this.id = id;
+        // ! String name, String contactNum, int age, int id, String username, String password )
+        super(name, contactNum, age, id, username, password);
+        // this.id = id;
     }
 
     public boolean close_Client_Acc(int userID) {

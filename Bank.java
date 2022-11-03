@@ -2,36 +2,44 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Bank {
-    private static final Scanner in = new Scanner(System.in);
-    private static final Admin ADMIN = new Admin(1, "Admin", "0123456789", 20, "admin", "admin");
-    private static Service loginService;
-    private static Service signupService;
-    private static Service loanService;
-    private static ArrayList<User> users;
+    static private final Scanner in = new Scanner(System.in);
+    static private final Admin ADMIN = new Admin(1, "Admin", "0123456789", 20, "admin", "admin");
+    static private Service loginService;
+    static private Service signupService;
+    static private Service loanService;
+    static private ArrayList<User> users;
+    static private User initialUsers[] = {
+            new Client(2, "Client", 19, "Dammam", "123456987", "1234", "client", "client"),
+            new Client(3, "Client2", 20, "Riyadh", "987563214", "5741", "client2", "client2")
+    };
 
     public static void main(String[] args) {
         users = new ArrayList<>();
         users.add(ADMIN);
 
-        users.add(new Client(2, "Client", 19, "Dammam", "123456987", "1234", "client", "client"));
-        users.add(new Client(3, "Client2", 20, "Riyadh", "987563214", "5741", "client2", "client2"));
-
+        for (User user : initialUsers) {
+            users.add(user);
+        }
         setClientsToAdmin();
 
         while (true) {
             authMenu();
             int choice = Integer.parseInt(in.nextLine());
+            // int choice = in.nextInt() ;
             if (choice == 1) {
                 User c = login();
                 if (c != null) {
                     if (c instanceof Client) {
                         clientMenuController((Client) c);
-                    } else System.out.println("Invalid username or password");
-                } else System.out.println("Invalid username or password");
+                    } else
+                        System.out.println("Invalid username or password");
+                } else
+                    System.out.println("Invalid username or password");
             } else if (choice == 2) {
                 if (login() != null)
                     adminMenuController();
-                else System.out.println("Invalid admin name or password");
+                else
+                    System.out.println("Invalid admin name or password");
             } else if (choice == 3) {
                 signup();
             } else if (choice == 4) {
@@ -44,11 +52,13 @@ public class Bank {
     }
 
     public static void authMenu() {
-    	System.out.println("Welcome to JAVA ATM");
+
+        System.out.println("Welcome to JAVA ATM");
         System.out.println("1. Login as Client");
         System.out.println("2. Login as Admin");
         System.out.println("3. Signup");
         System.out.println("4. Exit");
+        System.out.print("What would you like to do ? : ");
     }
 
     public static void adminMenu() {
@@ -85,8 +95,7 @@ public class Bank {
                 client.print_loans();
             } else if (choice == 3) {
                 client.view_Client_Acc();
-            }
-            else if (choice == 4 || choice==5 || choice == 6){
+            } else if (choice == 4 || choice == 5 || choice == 6) {
                 Transaction transaction = new Transaction(client);
                 System.out.print("Enter PIN: ");
                 String pin = in.nextLine();
@@ -94,21 +103,19 @@ public class Bank {
                     System.out.println("Invalid PIN");
                     continue;
                 }
-                if (choice == 4){
+                if (choice == 4) {
                     System.out.print("Enter amount: ");
                     double amount = Double.parseDouble(in.nextLine());
                     if (transaction.deposit(amount))
                         client.getTransactions().add(transaction);
                     transaction.printMessage();
-                }
-                else if (choice == 5){
+                } else if (choice == 5) {
                     System.out.print("Enter amount: ");
                     double amount = Double.parseDouble(in.nextLine());
                     if (transaction.withdraw(amount))
                         client.getTransactions().add(transaction);
                     transaction.printMessage();
-                }
-                else {
+                } else {
                     System.out.print("Enter amount: ");
                     double amount = Double.parseDouble(in.nextLine());
                     System.out.print("Enter account number: ");
@@ -118,13 +125,12 @@ public class Bank {
                         if (transaction.transfer(receiver, amount))
                             client.getTransactions().add(transaction);
                         transaction.printMessage();
-                    } else System.out.println("Invalid account number");
+                    } else
+                        System.out.println("Invalid account number");
                 }
-            }
-             else if (choice == 7) {
+            } else if (choice == 7) {
                 client.print_history();
-            }
-             else if (choice == 8) {
+            } else if (choice == 8) {
                 System.out.print("Enter PIN: ");
                 String pin = in.nextLine();
                 if (!pin.equals(client.getPIN())) {
@@ -135,8 +141,7 @@ public class Bank {
                 double limit = Double.parseDouble(in.nextLine());
                 client.changeLimit(limit);
                 System.out.println("Limit set successfully");
-            }
-             else if (choice == 9) {
+            } else if (choice == 9) {
                 System.out.println("Goodbye!");
                 break;
             } else {
@@ -169,7 +174,7 @@ public class Bank {
     }
 
     public static User login() {
-        System.out.println("Enter username: ");
+        System.out.print("Enter username : ");
         String username = in.nextLine();
         System.out.println("Enter password: ");
         String password = in.nextLine();
@@ -199,7 +204,7 @@ public class Bank {
     }
 
     public static void setClientsToAdmin() {
-        ArrayList<Client> clients = new ArrayList<>();
+        ArrayList<Client> clients = new ArrayList<Client>();
         for (User user : users) {
             if (user instanceof Client)
                 clients.add((Client) user);

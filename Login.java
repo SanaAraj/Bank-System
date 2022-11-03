@@ -30,7 +30,7 @@ public class Login extends Service {
     
         public User validation(){
         for (User user : arrUsers) {
-            if (user.getId().equals(id) && user.getPassword().equals(password)) {
+            if (user.getId() == id && user.getPassword().equals(password)) {
                 return user;
             }
         }
